@@ -1,52 +1,87 @@
-"use client";
-
-import { Poem } from "../types";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
 interface PoemCardProps {
-  poem: Poem;
+  id: string;
+  title: string;
+  author: string;
+  dynasty: string;
+  excerpt: string;
+  tags?: string[];
+  variant?: 'default' | 'compact';
 }
 
-export default function PoemCard({ poem }: PoemCardProps) {
-  return (
-    <Link href={`/poem/${poem.id}`}>
-      <motion.div
-        whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.1)" }}
-        className="group cursor-pointer relative overflow-hidden rounded-xl border border-[#E5E5E5] bg-[#FAF9F6] p-6 transition-colors hover:border-[#B93632]/30"
-      >
-        {/* Decorative Background Stamp (Optional) */}
-        <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-[#B93632]/5 blur-2xl transition-all group-hover:bg-[#B93632]/10" />
-
-        <div className="relative z-10 flex flex-col gap-4">
-          {/* Header */}
-          <div className="flex items-baseline justify-between border-b border-[#E5E5E5] pb-3">
-            <h3 className="font-serif text-xl font-bold text-[#2C2C2C] group-hover:text-[#B93632] transition-colors">
-              {poem.title}
-            </h3>
-            <span className="text-xs font-medium text-[#595959] bg-[#E5E5E5]/50 px-2 py-1 rounded-full">
-              [{poem.dynasty}] {poem.author}
-            </span>
+export default function PoemCard({ 
+  id, 
+  title, 
+  author, 
+  dynasty, 
+  excerpt, 
+  tags = [], 
+  variant = 'default' 
+}: PoemCardProps) {
+  
+  if (variant === 'compact') {
+    return (
+      <Link href={`/poem/${id}`} className="group block">
+        <div className="bg-surface border border-[var(--border)] hover:border-primary/30 p-4 rounded-lg transition-all duration-300 hover:shadow-md flex items-center justify-between">
+          <div>
+            <h4 className="font-serif font-bold text-primary group-hover:text-accent transition-colors">{title}</h4>
+            {/* ✅ 这里改为 font-sans */}
+            <p className="text-xs font-sans text-[var(--text-secondary)] mt-1">{dynasty} · {author}</p>
           </div>
-
-          {/* Preview Content (First 2 lines) */}
-          <div className="space-y-2 font-serif text-base leading-loose text-[#595959]">
-            {poem.content.slice(0, 2).map((line: string, index: number) => (
-              <p key={index}>{line}</p>
-            ))}
-            {poem.content.length > 2 && <span className="text-xs text-gray-400">...</span>}
-          </div>
-
-          {/* Footer Tags */}
-          <div className="mt-2 flex flex-wrap gap-2">
-            {poem.tags.map((tag: string) => (
-              <span key={tag} className="text-[10px] text-[#888] border border-[#eee] px-2 py-0.5 rounded">
-                {tag}
-              </span>
-            ))}
+          <div className="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+            <span className="font-serif text-sm">读</span>
           </div>
         </div>
-      </motion.div>
+      </Link>
+    );
+  }
+
+  return (
+    <Link href={`/poem/${id}`} className="group block h-full">
+      <article className="h-full bg-surface border border-[var(--border)] hover:border-primary/30 p-8 rounded-xl transition-all duration-300 hover:shadow-card hover:-translate-y-1 relative overflow-hidden flex flex-col">
+        
+        {/* 背景装饰字 */}
+        <div className="absolute -bottom-4 -right-4 text-6xl font-serif text-[var(--border)] opacity-20 select-none pointer-events-none group-hover:opacity-40 transition-opacity">
+          {dynasty}
+        </div>
+
+        {/* 顶部元数据 */}
+        <div className="flex justify-between items-start mb-4 relative z-10">
+          <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-1 rounded border border-accent/20">
+            {dynasty}
+          </span>
+          {tags && tags.length > 0 && (
+            <div className="flex gap-2">
+              {tags.slice(0, 2).map(tag => (
+                  <span key={tag} className="text-xs text-[var(--text-secondary)] bg-[var(--background)] px-1.5 py-0.5 rounded">#{tag}</span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* 标题 (保留宋体，更有古风) */}
+        <h3 className="text-xl font-serif font-bold text-primary mb-2 group-hover:text-accent transition-colors relative z-10">
+          {title}
+        </h3>
+        
+        {/* 作者 (改为细黑/幼圆) */}
+        <p className="text-sm font-sans font-medium text-[var(--text-secondary)] mb-6 flex items-center gap-2 relative z-10">
+          <span className="w-4 h-[1px] bg-primary/30"></span>
+          {author}
+        </p>
+
+        {/* 摘录内容 (✅ 关键修改：font-sans + font-light) */}
+        <div className="flex-grow relative z-10">
+           <p className="text-[var(--text-primary)] font-sans font-light leading-loose opacity-80 line-clamp-3 group-hover:opacity-100 transition-opacity text-justify">
+             {excerpt}
+           </p>
+        </div>
+
+        {/* 底部悬停条 */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+      </article>
     </Link>
   );
 }

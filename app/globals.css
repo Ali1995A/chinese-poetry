@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #2C5530;
+  --primary-light: #4A7C59;
+  --secondary: #8B4513;
+  --accent: #D4AF37;
+  --background: #FEFDF8;
+  --surface: #FFFEFB;
+  --text-primary: #2C2C2C;
+  --text-secondary: #666666;
+  --border: #E8E6E1;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-[var(--background)] text-[var(--text-primary)];
+  }
+  
+  /* 滚动条美化 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 9999px;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+}
