@@ -143,7 +143,7 @@ const collections = [
     subtitle: 'Three Character Classic',
     description: '人之初，性本善，中国传统蒙学第一书',
     icon: <BookOpen size={32} />,
-    href: '/poems?q=三字经',
+    href: '/poems?q=启蒙',
     color: 'from-sky-500/10 to-blue-500/10',
     accentColor: 'text-sky-600',
     category: '蒙学启蒙'
@@ -154,7 +154,7 @@ const collections = [
     subtitle: 'Thousand Character Classic',
     description: '天地玄黄，宇宙洪荒，古代识字启蒙经典',
     icon: <Scroll size={32} />,
-    href: '/poems?q=千字文',
+    href: '/poems?q=天地',
     color: 'from-cyan-500/10 to-teal-500/10',
     accentColor: 'text-cyan-600',
     category: '蒙学启蒙'
@@ -165,7 +165,7 @@ const collections = [
     subtitle: 'Standards for Students',
     description: '弟子规，圣人训，传统行为规范教育经典',
     icon: <GraduationCap size={32} />,
-    href: '/poems?q=弟子规',
+    href: '/poems?q=弟子',
     color: 'from-lime-500/10 to-green-500/10',
     accentColor: 'text-lime-600',
     category: '蒙学启蒙'
@@ -176,7 +176,7 @@ const collections = [
     subtitle: '300 Tang Poems',
     description: '熟读唐诗三百首，不会作诗也会吟',
     icon: <BookMarked size={32} />,
-    href: '/poems?q=唐诗三百首',
+    href: '/poems?dynasty=唐',
     color: 'from-rose-500/10 to-pink-500/10',
     accentColor: 'text-rose-600',
     category: '蒙学启蒙'
@@ -189,7 +189,7 @@ const collections = [
     subtitle: 'Landscape Poetry',
     description: '采菊东篱下，悠然见南山，自然山水之美',
     icon: <Trees size={32} />,
-    href: '/poems?tags=山水,田园',
+    href: '/poems?q=山水',
     color: 'from-emerald-500/10 to-green-500/10',
     accentColor: 'text-emerald-600',
     category: '风格流派'
@@ -200,7 +200,7 @@ const collections = [
     subtitle: 'Frontier Poetry',
     description: '大漠孤烟直，长河落日圆，边塞军旅豪情',
     icon: <Swords size={32} />,
-    href: '/poems?tags=边塞,战争',
+    href: '/poems?q=边塞',
     color: 'from-amber-500/10 to-orange-500/10',
     accentColor: 'text-amber-600',
     category: '风格流派'
@@ -211,7 +211,7 @@ const collections = [
     subtitle: 'Graceful Ci',
     description: '杨柳岸，晓风残月，婉约词的细腻柔情',
     icon: <Flower size={32} />,
-    href: '/poems?tags=婉约,爱情',
+    href: '/poems?q=婉约',
     color: 'from-pink-500/10 to-rose-500/10',
     accentColor: 'text-pink-600',
     category: '风格流派'
@@ -222,7 +222,7 @@ const collections = [
     subtitle: 'Heroic Ci',
     description: '大江东去，浪淘尽，豪放词的磅礴气势',
     icon: <Zap size={32} />,
-    href: '/poems?tags=豪放,壮志',
+    href: '/poems?q=豪放',
     color: 'from-red-500/10 to-orange-500/10',
     accentColor: 'text-red-600',
     category: '风格流派'
@@ -235,7 +235,7 @@ const collections = [
     subtitle: 'Four Seasons',
     description: '春华秋实，夏雨冬雪，四季变换的诗意',
     icon: <Sun size={32} />,
-    href: '/poems?tags=春,夏,秋,冬',
+    href: '/poems?q=春',
     color: 'from-cyan-500/10 to-blue-500/10',
     accentColor: 'text-cyan-600',
     category: '主题意境'
@@ -246,7 +246,7 @@ const collections = [
     subtitle: 'Moon & Love',
     description: '举头望明月，低头思故乡，月亮与相思主题',
     icon: <Moon size={32} />,
-    href: '/poems?tags=月亮,相思',
+    href: '/poems?q=月',
     color: 'from-indigo-500/10 to-purple-500/10',
     accentColor: 'text-indigo-600',
     category: '主题意境'
@@ -257,7 +257,7 @@ const collections = [
     subtitle: 'Landscape Feeling',
     description: '行到水穷处，坐看云起时，山水寄情的意境',
     icon: <Mountain size={32} />,
-    href: '/poems?tags=山水,寄情',
+    href: '/poems?q=山水',
     color: 'from-teal-500/10 to-emerald-500/10',
     accentColor: 'text-teal-600',
     category: '主题意境'
@@ -270,7 +270,7 @@ const collections = [
     subtitle: 'Four Books & Five Classics',
     description: '儒家经典，修身齐家治国平天下的智慧',
     icon: <BookOpen size={32} />,
-    href: '/poems?q=四书五经',
+    href: '/poems?q=经典',
     color: 'from-stone-500/10 to-gray-500/10',
     accentColor: 'text-stone-600',
     category: '经典文集'
@@ -281,7 +281,7 @@ const collections = [
     subtitle: 'Dream Shadows',
     description: '明清小品文，闲情逸致，生活美学的典范',
     icon: <Feather size={32} />,
-    href: '/poems?q=幽梦影',
+    href: '/poems?q=梦',
     color: 'from-slate-500/10 to-gray-500/10',
     accentColor: 'text-slate-600',
     category: '经典文集'
