@@ -67,6 +67,7 @@ export default function Footer() {
                   <li><Link href="/poems" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">诗词文库</Link></li>
                   <li><Link href="/authors" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">历代诗人</Link></li>
                   <li><Link href="/collections" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">精选主题</Link></li>
+                  <li><Link href="/favorites" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">我的收藏</Link></li>
                 </ul>
               </div>
 

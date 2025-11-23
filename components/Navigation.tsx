@@ -31,6 +31,7 @@ export default function Navigation() {
     { name: '文库', href: '/poems' },
     { name: '诗人', href: '/authors' },
     { name: '精选', href: '/collections' },
+    ...(user ? [{ name: '收藏夹', href: '/favorites' }] : []),
   ];
 
   return (

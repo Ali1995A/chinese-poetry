@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Share2, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
 import PoemReader from '@/components/PoemReader';
+import FavoriteButton from '@/components/FavoriteButton';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 
@@ -53,10 +54,7 @@ export default async function PoemPage({ params }: { params: { id: string } }) {
         </Link>
 
         <div className="flex gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--border)] bg-surface text-[var(--text-secondary)] hover:text-primary hover:border-primary/30 transition-all text-sm font-serif">
-            <Heart size={16} />
-            <span className="hidden sm:inline">收藏</span>
-          </button>
+          <FavoriteButton poemId={poem.id} />
         </div>
       </div>
 
