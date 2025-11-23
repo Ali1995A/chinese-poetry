@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Search, X, Clock, TrendingUp, BookOpen, User, Hash, Filter } from 'lucide-react';
 import { searchPoems, getSearchSuggestions, getPopularSearches, logSearch } from '@/utils/search';
@@ -25,7 +25,8 @@ interface SearchSuggestion {
   count?: number;
 }
 
-export default function SearchPage() {
+// 搜索内容组件，包装在 Suspense 中
+function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { user } = useAuth();
@@ -425,5 +426,21 @@ export default function SearchPage() {
         )}
       </div>
     </main>
+  );
+}
+
+// 主页面组件，包装在 Suspense 中
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen pt-24 pb-20 px-4 md:px-8 bg-[var(--background)]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <p className="mt-4 text-[var(--text-secondary)]">加载中...</p>
+        </div>
+      </main>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 }
