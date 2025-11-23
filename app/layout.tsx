@@ -3,6 +3,7 @@ import { Noto_Serif_SC, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // 配置字体
 const notoSerif = Noto_Serif_SC({
@@ -32,16 +33,18 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" className={`${notoSerif.variable} ${notoSans.variable}`}>
       <body className="font-sans min-h-screen flex flex-col">
-        {/* 1. 导航栏 */}
-        <Navigation />
-        
-        {/* 2. 页面主体 */}
-        <div className="flex-grow">
-          {children}
-        </div>
-        
-        {/* 3. 页脚 */}
-        <Footer />
+        <AuthProvider>
+          {/* 1. 导航栏 */}
+          <Navigation />
+          
+          {/* 2. 页面主体 */}
+          <div className="flex-grow">
+            {children}
+          </div>
+          
+          {/* 3. 页脚 */}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, Mountain, Wind, Feather, Scroll } from 'lucide-react';
+import { Sparkles, ArrowRight, Mountain, Wind, Feather, Scroll, Quote } from 'lucide-react';
 import SearchBar from '@/components/SearchBar';
 import PoemCard from '@/components/PoemCard';
 import CalligraphyStroke from '@/components/CalligraphyStroke';
@@ -14,15 +14,63 @@ const categories = [
   { name: '全部', icon: <Scroll size={20} />, count: '文库', href: '/poems' },
 ];
 
+// 生成基于日期的稳定随机数种子
+function getDailySeed(): number {
+  const today = new Date();
+  const dateString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  let hash = 0;
+  for (let i = 0; i < dateString.length; i++) {
+    const char = dateString.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // 转换为32位整数
+  }
+  return Math.abs(hash);
+}
+
 // 服务端组件
 export default async function Home() {
   
   // ================= 从数据库获取真实数据 =================
-  // 随机获取 3 首诗作为推荐 (使用 limit 简单获取)
-  const { data: featuredPoems, error } = await supabase
+  // 基于日期的稳定随机推荐算法
+  const dailySeed = getDailySeed();
+  
+  // 获取所有诗歌ID
+  const { data: allPoems, error: countError } = await supabase
     .from('poems')
-    .select('*')
-    .limit(3); 
+    .select('id')
+    .order('id');
+
+  if (countError) {
+    console.error('Error fetching poem IDs:', countError);
+  }
+
+  // 使用基于日期的随机算法选择6首不同的诗
+  let featuredPoems = null;
+  let error = null;
+  
+  if (allPoems && allPoems.length > 0) {
+    const getRandomIndices = () => {
+      const indices = new Set<number>();
+      while (indices.size < Math.min(6, allPoems.length)) {
+        const randomValue = Math.sin(dailySeed + indices.size * 100) * 10000;
+        const index = Math.floor(Math.abs(randomValue) % allPoems.length);
+        indices.add(index);
+      }
+      return Array.from(indices);
+    };
+
+    const randomIndices = getRandomIndices();
+    const selectedIds = randomIndices.map(index => allPoems[index].id);
+    
+    // 获取选中的诗歌详情
+    const { data: poemsData, error: poemsError } = await supabase
+      .from('poems')
+      .select('*')
+      .in('id', selectedIds);
+
+    featuredPoems = poemsData;
+    error = poemsError;
+  }
 
   if (error) {
     console.error('Error fetching home poems:', error);
@@ -66,6 +114,43 @@ export default async function Home() {
             在数字世界重拾水墨丹青的感动，<br className="hidden md:block"/>
             让每一次阅读都成为一场心灵的修行。
           </p>
+
+          {/* 每日一言 */}
+          <div className="mt-8 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
+            <div className="bg-surface/60 backdrop-blur-sm border border-[var(--border)] rounded-2xl p-6 text-center relative overflow-hidden">
+              {/* 装饰性背景 */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/20 via-accent/40 to-primary/20"></div>
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-accent/5 rounded-full blur-xl"></div>
+              
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <Quote size={18} className="text-accent" />
+                <span className="text-sm font-sans font-medium text-accent">每日一言</span>
+              </div>
+              
+              <p className="text-lg font-serif text-primary leading-relaxed mb-2">
+                {(() => {
+                  const dailyQuotes = [
+                    "诗者，志之所之也。在心为志，发言为诗。",
+                    "不学诗，无以言。",
+                    "诗可以兴，可以观，可以群，可以怨。",
+                    "文章千古事，得失寸心知。",
+                    "读书破万卷，下笔如有神。",
+                    "腹有诗书气自华。",
+                    "熟读唐诗三百首，不会作诗也会吟。",
+                    "诗是无形画，画是有形诗。",
+                    "吟安一个字，捻断数茎须。",
+                    "两句三年得，一吟双泪流。"
+                  ];
+                  const seed = getDailySeed();
+                  return dailyQuotes[seed % dailyQuotes.length];
+                })()}
+              </p>
+              
+              <p className="text-sm font-sans text-[var(--text-secondary)] opacity-70">
+                每日更新 · 经典诗词名言
+              </p>
+            </div>
+          </div>
 
           {/* 搜索组件 */}
           <div className="mt-12 max-w-2xl mx-auto">
@@ -132,7 +217,7 @@ export default async function Home() {
         {featuredPoems && featuredPoems.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredPoems.map((poem, index) => (
-              <div key={poem.id} style={{ animationDelay: `${index * 150}ms` }} className="animate-fade-in-up">
+              <div key={poem.id} style={{ animationDelay: `${index * 100}ms` }} className="animate-fade-in-up">
                 <PoemCard 
                   id={poem.id}
                   title={poem.title}

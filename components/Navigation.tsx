@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Search, User, BookOpen, Feather } from 'lucide-react';
+import { Menu, X, Search, User, BookOpen, Feather, UserPlus, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { user, signOut } = useAuth();
 
   // 监听滚动以改变导航栏状态
   useEffect(() => {
@@ -78,14 +80,37 @@ export default function Navigation() {
 
             {/* 3. 右侧功能区 (桌面) */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="p-2 text-[var(--text-secondary)] hover:text-primary hover:bg-primary/5 rounded-full transition-colors">
+              <Link href="/poems" className="p-2 text-[var(--text-secondary)] hover:text-primary hover:bg-primary/5 rounded-full transition-colors">
                 <Search size={20} />
-              </button>
-              <div className="h-4 w-[1px] bg-[var(--border)]"></div>
-              <Link href="/login" className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 text-primary text-sm hover:bg-primary hover:text-white transition-all duration-300">
-                <User size={16} />
-                <span>登入</span>
               </Link>
+              <div className="h-4 w-[1px] bg-[var(--border)]"></div>
+              
+              {user ? (
+                <>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 text-primary text-sm">
+                    <User size={16} />
+                    <span>{user.email?.split('@')[0]}</span>
+                  </div>
+                  <button
+                    onClick={signOut}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500 text-white text-sm hover:bg-red-600 transition-all duration-300"
+                  >
+                    <LogOut size={16} />
+                    <span>退出</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 text-primary text-sm hover:bg-primary hover:text-white transition-all duration-300">
+                    <UserPlus size={16} />
+                    <span>注册</span>
+                  </Link>
+                  <Link href="/login" className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-white text-sm hover:bg-primary/90 transition-all duration-300">
+                    <User size={16} />
+                    <span>登入</span>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* 4. 移动端菜单按钮 */}
@@ -128,28 +153,58 @@ export default function Navigation() {
 
           {/* 移动端底部功能 */}
           <div className="mt-auto space-y-6">
-             <Link 
-                href="/login" 
-                className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-white rounded-xl text-lg shadow-lg active:scale-95 transition-transform"
-                onClick={() => setIsMobileMenuOpen(false)}
-             >
-                <User size={20} />
-                <span>立即登录</span>
-             </Link>
+            {user ? (
+              <>
+                <div className="flex items-center justify-center gap-2 w-full py-4 border border-primary/30 text-primary rounded-xl text-lg">
+                  <User size={20} />
+                  <span>{user.email?.split('@')[0]}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    signOut();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center justify-center gap-2 w-full py-4 bg-red-500 text-white rounded-xl text-lg shadow-lg active:scale-95 transition-transform"
+                >
+                  <LogOut size={20} />
+                  <span>退出登录</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="flex items-center justify-center gap-2 w-full py-4 bg-primary text-white rounded-xl text-lg shadow-lg active:scale-95 transition-transform"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <User size={20} />
+                  <span>立即登录</span>
+                </Link>
+                
+                <Link
+                  href="/login"
+                  className="flex items-center justify-center gap-2 w-full py-4 border border-primary text-primary rounded-xl text-lg active:scale-95 transition-transform"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <UserPlus size={20} />
+                  <span>注册账号</span>
+                </Link>
+              </>
+            )}
              
              <div className="flex justify-center gap-8 text-[var(--text-secondary)]">
-               <button className="flex flex-col items-center gap-1 text-xs">
+               <Link href="/poems" className="flex flex-col items-center gap-1 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                  <div className="p-3 bg-surface border border-[var(--border)] rounded-full">
                    <Search size={20} />
                  </div>
                  搜索
-               </button>
-               <button className="flex flex-col items-center gap-1 text-xs">
+               </Link>
+               <Link href="/poems" className="flex flex-col items-center gap-1 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                  <div className="p-3 bg-surface border border-[var(--border)] rounded-full">
                    <BookOpen size={20} />
                  </div>
-                 阅读历史
-               </button>
+                 文库
+               </Link>
              </div>
           </div>
         </div>
