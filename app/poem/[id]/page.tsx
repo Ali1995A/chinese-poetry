@@ -67,43 +67,37 @@ export default async function PoemPage({ params }: { params: { id: string } }) {
 
       {/* 上一首/下一首导航 */}
       <div className="max-w-6xl mx-auto px-4 md:px-6 mt-12 pt-8 border-t border-[var(--border)]">
-        <div className="flex justify-between items-center font-sans">
+        <div className="flex justify-between items-center">
           {/* 上一首按钮 */}
           {prevPoem ? (
             <Link
               href={`/poem/${prevPoem.id}`}
-              className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-primary transition-colors group"
+              className="flex items-center gap-4 p-4 rounded-lg border border-[var(--border)] bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all group min-w-[200px]"
             >
-              <ChevronLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-              <div className="text-right">
-                <div className="text-sm opacity-70">上一首</div>
-                <div className="font-medium line-clamp-1">{prevPoem.title}</div>
+              <ChevronLeft size={20} className="text-[var(--text-secondary)] group-hover:text-primary group-hover:-translate-x-1 transition-all" />
+              <div className="text-right flex-1">
+                <div className="text-sm text-[var(--text-secondary)] font-sans">上一首</div>
+                <div className="font-serif font-medium line-clamp-1 text-[var(--text-primary)]">{prevPoem.title}</div>
               </div>
             </Link>
           ) : (
-            <div className="opacity-30">
-              <div className="text-sm">上一首</div>
-              <div className="font-medium">已是第一首</div>
-            </div>
+            <span className="invisible min-w-[200px]">占位符</span>
           )}
 
           {/* 下一首按钮 */}
           {nextPoem ? (
             <Link
               href={`/poem/${nextPoem.id}`}
-              className="flex items-center gap-2 text-[var(--text-secondary)] hover:text-primary transition-colors group"
+              className="flex items-center gap-4 p-4 rounded-lg border border-[var(--border)] bg-surface hover:border-primary/50 hover:bg-primary/5 transition-all group min-w-[200px]"
             >
-              <div className="text-left">
-                <div className="text-sm opacity-70">下一首</div>
-                <div className="font-medium line-clamp-1">{nextPoem.title}</div>
+              <div className="text-left flex-1">
+                <div className="text-sm text-[var(--text-secondary)] font-sans">下一首</div>
+                <div className="font-serif font-medium line-clamp-1 text-[var(--text-primary)]">{nextPoem.title}</div>
               </div>
-              <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <ChevronRight size={20} className="text-[var(--text-secondary)] group-hover:text-primary group-hover:translate-x-1 transition-all" />
             </Link>
           ) : (
-            <div className="opacity-30">
-              <div className="text-sm">下一首</div>
-              <div className="font-medium">已是最后一首</div>
-            </div>
+            <span className="invisible min-w-[200px]">占位符</span>
           )}
         </div>
       </div>
