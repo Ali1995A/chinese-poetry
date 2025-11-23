@@ -12,6 +12,7 @@ import { ChuciPoem } from '../types/chuci';
 import { ShijingPoem } from '../types/shijing';
 import { YuanquPoem } from '../types/yuanqu';
 import { SishuwujingPoem } from '../types/sishuwujing';
+import { generateSearchVariants } from '../utils/chinese-converter';
 
 interface SearchResult {
   poems: Poem[];
@@ -258,15 +259,20 @@ export async function searchPoems(query: string): Promise<SearchResult> {
   // if (error) return { poems: [], total: 0 };
   // return { poems: data, total: count || 0 };
   
-  const lowerQuery = query.toLowerCase();
+  const searchVariants = generateSearchVariants(query);
   
   // 搜索模拟诗词
-  const filteredMockPoems = MOCK_POEMS.filter(poem =>
-    poem.title.toLowerCase().includes(lowerQuery) ||
-    poem.author.toLowerCase().includes(lowerQuery) ||
-    poem.content.toLowerCase().includes(lowerQuery) ||
-    poem.tags.some((tag: string) => tag.toLowerCase().includes(lowerQuery))
-  );
+  const filteredMockPoems = MOCK_POEMS.filter(poem => {
+    for (const variant of searchVariants) {
+      if (poem.title.includes(variant) ||
+          poem.author.includes(variant) ||
+          poem.content.includes(variant) ||
+          poem.tags.some((tag: string) => tag.includes(variant))) {
+        return true;
+      }
+    }
+    return false;
+  });
   
   // 搜索论语数据
   const lunyuResult = await searchLunyuPoems(query);

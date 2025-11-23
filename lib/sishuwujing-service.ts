@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { SishuwujingChapter, SishuwujingData, SishuwujingPoem } from '../types/sishuwujing';
 import { Poem } from '../types/poem';
+import { generateSearchVariants } from '../utils/chinese-converter';
 
 export class SishuwujingService {
   private data: SishuwujingData | null = null;
@@ -139,14 +140,20 @@ export class SishuwujingService {
    */
   async search(query: string): Promise<SishuwujingPoem[]> {
     const poems = await this.convertToPoems();
-    const lowerQuery = query.toLowerCase();
+    const searchVariants = generateSearchVariants(query);
     
-    return poems.filter(poem => 
-      poem.title.toLowerCase().includes(lowerQuery) ||
-      poem.content.toLowerCase().includes(lowerQuery) ||
-      poem.chapter?.toLowerCase().includes(lowerQuery) ||
-      poem.author.toLowerCase().includes(lowerQuery)
-    );
+    return poems.filter(poem => {
+      // 检查所有搜索变体
+      for (const variant of searchVariants) {
+        if (poem.title.includes(variant) ||
+            poem.content.includes(variant) ||
+            poem.chapter?.includes(variant) ||
+            poem.author.includes(variant)) {
+          return true;
+        }
+      }
+      return false;
+    });
   }
 
   /**
