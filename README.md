@@ -1,133 +1,260 @@
 <p align="center">
-  <a href="https://github.com/chinese-poetry/chinese-poetry">
-      <img src="https://avatars3.githubusercontent.com/u/30764933?s=200&v=4" alt="chinese-poetry">
+  <a href="https://github.com/Ali1995A/chinese-poetry">
+    <img src="https://avatars3.githubusercontent.com/u/30764933?s=200&v=4" alt="chinese-poetry" width="100">
   </a>
 </p>
 
-<h2 align="center">chinese-poetry: 最全中文诗歌古典文集数据库</h2>
+<h1 align="center">诗云 Poetry Cloud</h1>
 
 <p align="center">
-  <a href="https://travis-ci.com/chinese-poetry/chinese-poetry" rel="nofollow">
-    <img height="28px" alt="Build Status" src="https://img.shields.io/travis/chinese-poetry/chinese-poetry?style=for-the-badge" style="max-width:100%;">
-  </a>
-  <a href="https://github.com/chinese-poetry/chinese-poetry/blob/master/LICENSE">
-    <img height="28px" alt="License" src="http://img.shields.io/badge/license-mit-blue.svg?style=for-the-badge" style="max-width:100%;">
-  </a>
-  <a href="https://github.com/chinese-poetry/chinese-poetry/graphs/contributors">
-    <img height="28px" alt="Contributors" src="https://img.shields.io/github/contributors/chinese-poetry/chinese-poetry.svg?style=for-the-badge" style="max-width:100%;">
-  </a>
-  <a href="https://www.patreon.com/jackeygao" rel="nofollow">
-    <img height="28px" alt="Patreon" src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Djackeygao%26type%3Dpledges&style=for-the-badge" style="max-width:100%;">
-  </a>
+  <strong>现代化的中国古典诗词阅读与探索平台</strong>
 </p>
-
-
-最全的中华古典文集数据库，包含 5.5 万首唐诗、26 万首宋诗、2.1 万首宋词和其他古典文集。诗人包括唐宋两朝近 1.4 万古诗人，和两宋时期 1.5 千古词人。数据来源于互联网。
-
-**为什么要做这个仓库?** 古诗是中华民族乃至全世界的瑰宝，我们应该传承下去，虽然有古典文集，但大多数人并没有拥有这些书籍。从某种意义上来说，这些庞大的文集离我们是有一定距离的。而电子版方便拷贝，所以此开源数据库诞生了。此数据库通过 JSON 格式分发，可以让你很方便的开始你的项目。
-
-古诗采集没有记录过程，因为古诗数据庞大，目标网站有限制，采集过程经常中断超过了一个星期。2017 年新加入全宋词，[全宋词爬取过程及数据分析](https://jackeygao.github.io/r/words/crawl-ci.html)。
-
-## 高频词分析图
-
-<details open>
-  <summary><b>宋词受欢迎的词牌名</b></summary>
-
-<div align="center">
-<img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/ci_rhythmic_topK.png" alt="两宋喜欢的词牌名">
-</div>
-</details>
-
-<details>
-  <summary><b>宋词高频词</b></summary>
-  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/ci_words_topK.png" alt="宋词高频词" style="max-width:100%;">
-</details>
-
-<details>
-  <summary><b>宋词作者作品榜</b></summary>
-  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/ci_author_topK.png" alt="宋词作者作品榜" style="max-width:100%;">
-</details>
-
-<details>
-  <summary><b>唐诗高频词</b></summary>
-  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/tang_text_topK.png" alt="唐诗高频词" style="max-width:100%;">
-</details>
-
-<details>
-  <summary><b>唐诗作者作品榜</b></summary>
-  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/tang_author_topK.png" alt="唐诗作者作品榜" style="max-width:100%;">
-</details>
-
-<details>
-  <summary><b>宋诗高频词</b></summary>
-  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/song_text_topK.png" alt="宋诗高频词" style="max-width:100%;">
-</details>
-
-<details>
-  <summary><b>宋诗作者作品榜</b></summary>
-  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/song_author_topK.png" alt="宋诗作者作品榜" style="max-width:100%;">
-</details>
-
-## 数据集
-
-- [唐诗宋诗](./全唐诗)
-- [全宋词](./宋词)
-- [五代·花间集](./五代诗词/huajianji)
-- [五代·南唐二主词](./五代诗词/nantang)
-- [论语](./论语)
-- [诗经](./诗经)
-- [幽梦影](./幽梦影)
-- [四书五经](./四书五经)
-- [蒙学](./蒙学)
-- [纳兰性德诗集](./纳兰性德)
-- [御定全唐詩](./御定全唐詩)
-
-
-## 贡献
-
-本项目目的是借助技术来生成格式化(JSON)数据，让开发者更方便快速的构建诗词类应用程序。身单力薄，欢迎更多人来维护，你可以通过以下方法来参与贡献：
-
-- 直接提交 PR 或者通过 issue 讨论来优化完善此数据库，理论上古诗歌体非宗教类都欢迎加入，部分有争议性的数据需要社区投票讨论决定是否加入。关于诗句的纠错在创建 PR 时请标明出处。更多规范请[参考贡献规范文档](https://github.com/chinese-poetry/chinese-poetry/wiki/%E5%8F%82%E4%B8%8E%E8%B4%A1%E7%8C%AE%E8%A7%84%E8%8C%83)。
-
-- 如果你没有办法直接参与完善的过程，你也可以通过 「[爱发电赞助](https://afdian.net/a/chinese-poetry)」  「[Patreon 周期性赞助](https://www.patreon.com/jackeygao)」 的形式来持续帮助并激励我去优化完善此数据库。如果您不喜欢周期性赞助，你也可以通过「[支付宝](https://github.com/jackeyGao/JackeyGao.github.io/blob/master/static/images/alipay.png)」或者「[微信赞赏码](https://github.com/jackeyGao/JackeyGao.github.io/blob/master/static/images/wechat.jpg)」进行一次性赞助(备注留下邮箱)。
-
-- 如有建议或吐槽，欢迎联系我的邮箱 gaojunqi@outlook.com。
-
-无论通过哪种形式贡献最终都会使之变得更好！
-
-### 赞助者
-
-无
-
-### 贡献者
 
 <p align="center">
-<img src="https://opencollective.com/chinese-poetry/contributors.svg?width=890&button=false" alt="Contributors">
+  <a href="https://github.com/Ali1995A/chinese-poetry/blob/master/LICENSE">
+    <img alt="License" src="http://img.shields.io/badge/license-mit-blue.svg?style=for-the-badge" style="max-width:100%;">
+  </a>
+  <a href="https://nextjs.org">
+    <img alt="Next.js" src="https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js" style="max-width:100%;">
+  </a>
+  <a href="https://tailwindcss.com">
+    <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-3.3-38B2AC?style=for-the-badge&logo=tailwind-css" style="max-width:100%;">
+  </a>
+  <a href="https://supabase.com">
+    <img alt="Supabase" src="https://img.shields.io/badge/Supabase-2.39-3ECF8E?style=for-the-badge&logo=supabase" style="max-width:100%;">
+  </a>
 </p>
 
-## 案例展示
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jackeygao/chinese-poetry/master/images/full-tang-poetry.png" alt="诗云网站预览" width="800">
+</p>
 
-<details>
-  <summary>案例展示</summary>
-  
-- [中文诗歌主页](https://chinese-poetry.github.io)是一个基于浏览器的诗词网站，包含唐诗三百首、宋词三百首等文集。
-- [animalize](https://github.com/animalize) **/** [QuanTangshi](https://github.com/animalize/QuanTangshi)  *离线全唐诗 Android*
-- [justdark](https://github.com/justdark) **/** [pytorch-poetry-gen](https://github.com/justdark/pytorch-poetry-gen)  *a char-RNN based on pytorch*
-- [Clover27](https://github.com/Clover27) **/** [ancient-Chinese-poem-generator](https://github.com/Clover27/ancient-Chinese-poem-generator)  *Ancient-Chinese-Poem-Generator*
-- [chinese-poetry](https://github.com/chinese-poetry) **/** [poetry-calendar](http://chinese-poetry.github.io/poetry-calendar/)  *诗词周历*
-- [chenyuntc](https://github.com/chenyuntc) **/** [pytorch-book](https://github.com/chenyuntc/pytorch-book/blob/master/chapter9-神经网络写诗(CharRNN)/) *简体唐诗生成(char-RNN)，可生成藏头诗，自定义诗歌意境，前缀等。*
-- [okcy1016](https://github.com/okcy1016) **/** [poetry-desktop](https://github.com/okcy1016/poetry-desktop/) *诗词桌面*
-- [huangjianke](https://github.com/huangjianke) **/** [weapp-poem](https://github.com/huangjianke/weapp-poem/) *诗词墨客 小程序版*
-- [汉字之美](https://hz.xusenlin.com/) *汉字之美是一个方便查询的诗词网站，简洁干净，方便使用。*
-- [PaddlePaddle](https://github.com/PaddlePaddle) **/** [PaddleNLP](https://github.com/PaddlePaddle/PaddleNLP#%E4%BA%A4%E4%BA%92%E5%BC%8Fnotebook%E6%95%99%E7%A8%8B) *基于ERNIE-GEN(Transformer)的深度学习诗词生成，可自行修改逻辑来生成多种诗词风格。*
-- [Harold-y](https://github.com/Harold-y) **/** [chinese-poetry-db-web](https://github.com/Harold-y/chinese-poetry-db-web) *基于本仓库的MySQL DB整合 + 诗词Web端展示与检索*
-  
-</details>
+## 🌟 项目简介
 
-## Star History
+**诗云 (Poetry Cloud)** 是一个基于现代 Web 技术构建的中国古典诗词阅读与探索平台。我们致力于将传统诗词文化与现代用户体验完美结合，为用户提供沉浸式的诗词阅读体验。
 
-[![Star History Chart](https://api.star-history.com/svg?repos=chinese-poetry/chinese-poetry&type=Date)](https://star-history.com/#chinese-poetry/chinese-poetry&Date)
+### ✨ 核心特色
 
-## License
+- **🎨 现代化设计** - 融合水墨丹青美学与现代UI设计
+- **📚 海量诗词库** - 基于最全中文诗歌古典文集数据库
+- **🔍 智能搜索** - 支持诗词、作者、朝代、关键词搜索
+- **📱 响应式设计** - 完美适配桌面端和移动端
+- **⚡ 高性能** - 基于 Next.js 14 App Router 构建
+- **🔐 用户系统** - 完整的注册登录和个性化功能
+- **📊 数据分析** - 集成 Google Analytics 4 用户行为追踪
 
-[MIT](https://github.com/chinese-poetry/chinese-poetry/blob/master/LICENSE) 许可证。
+## 🚀 快速开始
+
+### 环境要求
+
+- Node.js 18+ 
+- npm 或 yarn
+- Supabase 账户（用于数据库）
+
+### 安装与运行
+
+1. **克隆项目**
+```bash
+git clone https://github.com/Ali1995A/chinese-poetry.git
+cd chinese-poetry
+```
+
+2. **安装依赖**
+```bash
+npm install
+# 或
+yarn install
+```
+
+3. **环境配置**
+创建 `.env.local` 文件并配置 Supabase 连接信息：
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+4. **运行开发服务器**
+```bash
+npm run dev
+# 或
+yarn dev
+```
+
+5. **访问应用**
+打开浏览器访问 `http://localhost:3000`
+
+## 📖 功能特性
+
+### 🏠 首页
+- **每日推荐** - 基于日期的稳定随机推荐算法
+- **分类导航** - 唐诗、宋词、元曲等朝代分类
+- **每日一言** - 经典诗词名言每日更新
+- **智能搜索** - 全局搜索诗词和作者
+
+### 📚 诗词文库
+- **分页浏览** - 优雅的分页设计，每页24首
+- **朝代筛选** - 按唐、宋、元、明、清等朝代筛选
+- **搜索功能** - 支持标题和作者搜索
+- **响应式网格** - 自适应卡片布局
+
+### 👨‍🎨 历代诗人
+- **诗人列表** - 按作品数量排序的诗人目录
+- **实时搜索** - 客户端搜索过滤
+- **作品统计** - 显示每位诗人的收录作品数量
+- **快速跳转** - 点击诗人查看其所有作品
+
+### 🎯 精选主题
+- **主题策划** - 精心策划的诗词主题集合
+- **名家专题** - 李白、杜甫、苏轼、李清照等名家专题
+- **朝代专题** - 大唐风华、宋词雅韵等朝代特色
+- **视觉设计** - 每个主题都有独特的色彩和图标
+
+### 📖 诗词阅读
+- **优雅排版** - 专业的诗词排版和字体设计
+- **注释背景** - 详细的注释和创作背景信息
+- **导航功能** - 上一首/下一首快速导航
+- **收藏功能** - 用户收藏诗词（开发中）
+
+### 🔐 用户系统
+- **注册登录** - 完整的用户认证流程
+- **邮箱验证** - 注册邮箱验证功能
+- **个人中心** - 用户信息管理（开发中）
+- **收藏管理** - 个人收藏诗词管理（开发中）
+
+## 🛠 技术栈
+
+### 前端技术
+- **Next.js 14** - React 全栈框架，App Router
+- **TypeScript** - 类型安全的 JavaScript
+- **Tailwind CSS** - 实用优先的 CSS 框架
+- **Lucide React** - 精美的图标库
+- **Framer Motion** - 动画库
+
+### 后端服务
+- **Supabase** - 开源 Firebase 替代品
+- **PostgreSQL** - 关系型数据库
+- **Row Level Security** - 行级安全策略
+
+### 开发工具
+- **ESLint** - 代码质量检查
+- **PostCSS** - CSS 处理工具
+- **Autoprefixer** - CSS 前缀自动添加
+
+## 🎨 设计理念
+
+### 视觉设计
+- **水墨风格** - 融合传统水墨元素与现代设计
+- **字体搭配** - 宋体（标题）与细黑（正文）的完美结合
+- **色彩系统** - 精心设计的色彩变量和主题系统
+- **动效设计** - 流畅的过渡动画和微交互
+
+### 用户体验
+- **渐进式加载** - 优化的加载体验和骨架屏
+- **响应式交互** - 适配各种设备和交互方式
+- **无障碍设计** - 关注可访问性和用户体验
+- **性能优化** - 代码分割和图片优化
+
+## 📊 数据来源
+
+本项目基于 [chinese-poetry/chinese-poetry](https://github.com/chinese-poetry/chinese-poetry) 数据集，包含：
+
+- **5.5 万首唐诗**
+- **26 万首宋诗** 
+- **2.1 万首宋词**
+- **其他古典文集**
+
+数据通过 Supabase 数据库进行管理和查询，提供高效的搜索和筛选功能。
+
+## 🔧 开发指南
+
+### 项目结构
+```
+chinese-poetry/
+├── app/                    # Next.js App Router 页面
+│   ├── page.tsx           # 首页
+│   ├── poems/             # 诗词文库
+│   ├── authors/           # 诗人页面
+│   ├── collections/       # 精选主题
+│   └── poem/[id]/         # 单首诗词详情
+├── components/            # 可复用组件
+│   ├── Navigation.tsx     # 导航栏
+│   ├── PoemReader.tsx     # 诗词阅读器
+│   ├── SearchBar.tsx      # 搜索组件
+│   └── CalligraphyStroke.tsx # 水墨装饰
+├── contexts/              # React Context
+│   └── AuthContext.tsx    # 用户认证上下文
+├── lib/                   # 工具函数
+├── utils/                 # 工具类
+└── types/                 # TypeScript 类型定义
+```
+
+### 数据导入
+项目包含数据导入脚本，可将原始 JSON 数据导入到 Supabase 数据库：
+
+```bash
+# 运行数据导入脚本
+npm run data-import
+```
+
+### 自定义开发
+要添加新功能或修改现有功能：
+
+1. 在 `app/` 目录下创建新页面
+2. 在 `components/` 目录下创建可复用组件
+3. 在 `lib/` 或 `utils/` 中添加工具函数
+4. 更新 TypeScript 类型定义
+
+## 🤝 贡献指南
+
+我们欢迎各种形式的贡献！你可以通过以下方式参与：
+
+1. **报告问题** - 在 Issues 中报告 bug 或提出建议
+2. **提交代码** - 通过 Pull Request 提交功能改进
+3. **完善文档** - 改进项目文档和说明
+4. **分享想法** - 参与功能讨论和设计建议
+
+### 开发流程
+1. Fork 本仓库
+2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
+
+## 📄 许可证
+
+本项目基于 [MIT 许可证](LICENSE) 开源。
+
+### MIT 许可证的主要限制：
+
+- **署名要求** - 必须在所有副本或重要部分中包含原始版权声明和许可声明
+- **无担保** - 软件按"原样"提供，不提供任何明示或暗示的担保
+- **责任限制** - 作者或版权持有人不对因软件或使用或其他方式产生的任何索赔、损害或其他责任负责
+
+### 允许的行为：
+- ✅ 商业使用
+- ✅ 修改
+- ✅ 分发
+- ✅ 私人使用
+- ✅ 子授权
+
+### 禁止的行为：
+- ❌ 无署名使用
+- ❌ 责任追究
+
+MIT 许可证是一个非常宽松的开源许可证，允许用户几乎无限制地使用、修改和分发软件。
+
+## 🙏 致谢
+
+- 感谢 [chinese-poetry](https://github.com/chinese-poetry/chinese-poetry) 项目提供的数据集
+- 感谢所有贡献者和用户的支持
+- 感谢开源社区提供的优秀工具和库
+
+## 📧 联系我们
+
+如有建议或吐槽，欢迎联系我的邮箱：liexpress@163.com
+
+---
+
+<p align="center">
+  让每一次阅读都成为一场心灵的修行 ✨
+</p>
