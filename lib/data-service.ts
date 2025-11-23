@@ -6,10 +6,12 @@ import { getShijingPoems, getShijingPoemById, searchShijing } from './shijing-se
 import { getYuanquPoems, getYuanquPoemById, searchYuanqu } from './yuanqu-service';
 import { getAllCaoCaoPoems, getCaoCaoPoemById, searchCaoCaoPoems } from './caocao-service';
 import { getAllNalanXingdePoems, getNalanXingdePoemById, searchNalanXingdePoems } from './nalanxingde-service';
+import { sishuwujingService, SishuwujingService } from './sishuwujing-service';
 import { LunyuPoem } from '../types/lunyu';
 import { ChuciPoem } from '../types/chuci';
 import { ShijingPoem } from '../types/shijing';
 import { YuanquPoem } from '../types/yuanqu';
+import { SishuwujingPoem } from '../types/sishuwujing';
 
 interface SearchResult {
   poems: Poem[];
@@ -101,6 +103,27 @@ function convertYuanquToStandardPoem(yuanquPoem: YuanquPoem): Poem {
   };
 }
 
+/**
+ * 将四书五经诗词转换为标准诗词格式
+ */
+function convertSishuwujingToStandardPoem(sishuwujingPoem: SishuwujingPoem): Poem {
+  return {
+    id: sishuwujingPoem.id,
+    title: sishuwujingPoem.title,
+    author: sishuwujingPoem.author,
+    content: sishuwujingPoem.content,
+    paragraphs: sishuwujingPoem.paragraphs || [sishuwujingPoem.content],
+    type: 'classic',
+    dynasty: sishuwujingPoem.dynasty,
+    source: '四书五经',
+    tags: ['经典', '儒家', sishuwujingPoem.source],
+    metadata: {
+      chapter: sishuwujingPoem.chapter,
+      source: sishuwujingPoem.source
+    }
+  };
+}
+
 // 模拟网络延迟
 const simulateNetworkDelay = async () => {
   await new Promise(resolve => setTimeout(resolve, 500));
@@ -125,12 +148,14 @@ export async function getAllPoems(): Promise<Poem[]> {
   const yuanquPoems = await getYuanquPoems();
   const caocaoPoems = await getAllCaoCaoPoems();
   const nalanPoems = await getAllNalanXingdePoems();
+  const sishuwujingPoems = await sishuwujingService.convertToPoems();
   
   // 转换所有诗词为标准格式
   const convertedLunyuPoems = lunyuPoems.map(convertLunyuToStandardPoem);
   const convertedChuciPoems = chuciPoems.map(convertChuciToStandardPoem);
   const convertedShijingPoems = shijingPoems.map(convertShijingToStandardPoem);
   const convertedYuanquPoems = yuanquPoems.map(convertYuanquToStandardPoem);
+  const convertedSishuwujingPoems = sishuwujingPoems.map(convertSishuwujingToStandardPoem);
   
   // 合并所有诗词
   const allPoems: Poem[] = [
@@ -139,6 +164,7 @@ export async function getAllPoems(): Promise<Poem[]> {
     ...convertedChuciPoems,
     ...convertedShijingPoems,
     ...convertedYuanquPoems,
+    ...convertedSishuwujingPoems,
     ...caocaoPoems,
     ...nalanPoems
   ];
@@ -190,6 +216,12 @@ export async function getPoemById(id: string): Promise<Poem | null> {
   const yuanquPoem = await getYuanquPoemById(id);
   if (yuanquPoem) {
     return convertYuanquToStandardPoem(yuanquPoem);
+  }
+  
+  // 在四书五经数据中查找
+  const sishuwujingPoem = await sishuwujingService.getById(id);
+  if (sishuwujingPoem) {
+    return convertSishuwujingToStandardPoem(sishuwujingPoem);
   }
   
   // 在曹操诗集数据中查找
@@ -248,6 +280,9 @@ export async function searchPoems(query: string): Promise<SearchResult> {
   // 搜索元曲数据
   const yuanquResult = await searchYuanqu(query);
   
+  // 搜索四书五经数据
+  const sishuwujingResult = await sishuwujingService.search(query);
+  
   // 搜索曹操诗集数据
   const caocaoPoems = await getAllCaoCaoPoems();
   const caocaoResult = searchCaoCaoPoems(caocaoPoems, query);
@@ -261,6 +296,7 @@ export async function searchPoems(query: string): Promise<SearchResult> {
   const convertedChuciPoems = chuciResult.poems.map(convertChuciToStandardPoem);
   const convertedShijingPoems = shijingResult.map(convertShijingToStandardPoem);
   const convertedYuanquPoems = yuanquResult.map(convertYuanquToStandardPoem);
+  const convertedSishuwujingPoems = sishuwujingResult.map(convertSishuwujingToStandardPoem);
   
   // 合并所有结果
   const allPoems: Poem[] = [
@@ -269,6 +305,7 @@ export async function searchPoems(query: string): Promise<SearchResult> {
     ...convertedChuciPoems,
     ...convertedShijingPoems,
     ...convertedYuanquPoems,
+    ...convertedSishuwujingPoems,
     ...caocaoResult,
     ...nalanResult
   ];
@@ -334,7 +371,7 @@ export async function getRandomPoem(): Promise<Poem> {
   // 随机选择从不同数据源中获取
   const randomType = Math.random();
   
-  if (randomType < 0.15) {
+  if (randomType < 0.12) {
     // 论语数据
     try {
       const lunyuPoem = await getRandomLunyuPoem();
@@ -342,7 +379,7 @@ export async function getRandomPoem(): Promise<Poem> {
     } catch (error) {
       return await getRandomPoemFallback();
     }
-  } else if (randomType < 0.3) {
+  } else if (randomType < 0.24) {
     // 楚辞数据
     try {
       const chuciPoem = await getRandomChuciPoem();
@@ -350,7 +387,7 @@ export async function getRandomPoem(): Promise<Poem> {
     } catch (error) {
       return await getRandomPoemFallback();
     }
-  } else if (randomType < 0.45) {
+  } else if (randomType < 0.36) {
     // 诗经数据
     try {
       const shijingPoems = await getShijingPoems();
@@ -359,7 +396,7 @@ export async function getRandomPoem(): Promise<Poem> {
     } catch (error) {
       return await getRandomPoemFallback();
     }
-  } else if (randomType < 0.6) {
+  } else if (randomType < 0.48) {
     // 元曲数据
     try {
       const yuanquPoems = await getYuanquPoems();
@@ -368,7 +405,16 @@ export async function getRandomPoem(): Promise<Poem> {
     } catch (error) {
       return await getRandomPoemFallback();
     }
-  } else if (randomType < 0.75) {
+  } else if (randomType < 0.6) {
+    // 四书五经数据
+    try {
+      const sishuwujingPoems = await sishuwujingService.convertToPoems();
+      const randomIndex = Math.floor(Math.random() * sishuwujingPoems.length);
+      return convertSishuwujingToStandardPoem(sishuwujingPoems[randomIndex]);
+    } catch (error) {
+      return await getRandomPoemFallback();
+    }
+  } else if (randomType < 0.72) {
     // 曹操诗集数据
     try {
       const caocaoPoems = await getAllCaoCaoPoems();
@@ -377,7 +423,7 @@ export async function getRandomPoem(): Promise<Poem> {
     } catch (error) {
       return await getRandomPoemFallback();
     }
-  } else if (randomType < 0.9) {
+  } else if (randomType < 0.84) {
     // 纳兰性德数据
     try {
       const nalanPoems = await getAllNalanXingdePoems();
