@@ -21,22 +21,26 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
           
-          {/* 左侧：品牌与愿景 */}
-          <div className="md:col-span-4 space-y-6">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 flex items-center justify-center border-2 border-primary rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                <span className="font-serif font-bold text-xl">诗</span>
-              </div>
-              <span className="text-2xl font-serif font-bold text-primary tracking-widest">
-                诗云
-              </span>
-            </Link>
-            {/* 简介文字改为幼圆/细黑 */}
-            <p className="text-[var(--text-secondary)] font-sans font-light leading-loose text-justify opacity-80">
-              致力于构建最优雅的中文诗词数字文库。让传统文化在现代设计中焕发新生，为每一位诗词爱好者提供静心阅读的栖息地。
-            </p>
+          {/* 左侧：品牌与项目介绍 */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-4">
+              <Link href="/" className="flex items-center gap-3 group">
+                <div className="w-10 h-10 flex items-center justify-center border-2 border-primary rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                  <span className="font-serif font-bold text-xl">诗</span>
+                </div>
+                <span className="text-2xl font-serif font-bold text-primary tracking-widest">
+                  诗云
+                </span>
+              </Link>
+              {/* 项目介绍 */}
+              <p className="text-[var(--text-secondary)] font-sans font-light leading-relaxed">
+                现代化的中文诗词数字文库，致力于让传统文化在现代设计中焕发新生，为每一位诗词爱好者提供静心阅读的栖息地。
+              </p>
+            </div>
+            
+            {/* 社交链接 */}
             <div className="flex gap-4">
               <a href="#" className="p-2 text-[var(--text-secondary)] hover:text-primary hover:bg-primary/5 rounded-full transition-colors border border-transparent hover:border-primary/20">
                 <Github size={20} />
@@ -50,48 +54,48 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* 中间：链接导航 */}
-          <div className="md:col-span-2 md:col-start-6">
-            <h4 className="font-bold text-primary mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-accent rounded-full"></span>
-              探索
-            </h4>
-            {/* 链接列表改为幼圆/细黑 */}
-            <ul className="space-y-4 font-sans text-[var(--text-secondary)]">
-              <li><Link href="/poems" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">诗词文库</Link></li>
-              <li><Link href="/authors" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">历代诗人</Link></li>
-              <li><Link href="/tags" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">标签分类</Link></li>
-              <li><Link href="/collections" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">精选榜单</Link></li>
-            </ul>
-          </div>
+          {/* 右侧：导航链接 */}
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* 探索 */}
+              <div>
+                <h4 className="font-bold text-primary mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-accent rounded-full"></span>
+                  探索
+                </h4>
+                <ul className="space-y-3 font-sans text-[var(--text-secondary)]">
+                  <li><Link href="/poems" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">诗词文库</Link></li>
+                  <li><Link href="/authors" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">历代诗人</Link></li>
+                  <li><Link href="/collections" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">精选主题</Link></li>
+                </ul>
+              </div>
 
-          <div className="md:col-span-2">
-            <h4 className="font-bold text-primary mb-6 flex items-center gap-2">
-              <span className="w-1 h-4 bg-accent rounded-full"></span>
-              关于
-            </h4>
-            <ul className="space-y-4 font-sans text-[var(--text-secondary)]">
-              <li><Link href="/about" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">关于我们</Link></li>
-              <li><Link href="/log" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">更新日志</Link></li>
-              <li><Link href="/api" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">开放 API</Link></li>
-              <li><Link href="/feedback" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">意见反馈</Link></li>
-            </ul>
-          </div>
+              {/* 关于 */}
+              <div>
+                <h4 className="font-bold text-primary mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-accent rounded-full"></span>
+                  关于
+                </h4>
+                <ul className="space-y-3 font-sans text-[var(--text-secondary)]">
+                  <li><Link href="/about" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">关于我们</Link></li>
+                  <li><Link href="/log" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">更新日志</Link></li>
+                  <li><Link href="/feedback" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">意见反馈</Link></li>
+                </ul>
+              </div>
 
-          {/* 右侧：项目信息 */}
-          <div className="md:col-span-4">
-             <div className="bg-[var(--background)] p-6 rounded-2xl border border-[var(--border)] relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-20 h-20 bg-accent/5 rounded-full blur-xl group-hover:bg-accent/10 transition-colors"></div>
-                <h4 className="font-serif font-bold text-primary mb-2">关于项目</h4>
-                <p className="font-sans text-[var(--text-secondary)] mb-4 leading-relaxed">
-                  诗云是一个现代化的中文诗词数字文库，致力于让传统文化在现代设计中焕发新生。
-                </p>
-                <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] opacity-60 font-sans">
-                   <span>开源项目</span>
-                   <span className="w-1 h-1 bg-[var(--text-secondary)] rounded-full"></span>
-                   <span>持续更新</span>
-                </div>
-             </div>
+              {/* 支持 */}
+              <div>
+                <h4 className="font-bold text-primary mb-4 flex items-center gap-2">
+                  <span className="w-1 h-4 bg-accent rounded-full"></span>
+                  支持
+                </h4>
+                <ul className="space-y-3 font-sans text-[var(--text-secondary)]">
+                  <li><Link href="/api" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">开放 API</Link></li>
+                  <li><Link href="/help" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">帮助中心</Link></li>
+                  <li><Link href="/contact" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">联系我们</Link></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
