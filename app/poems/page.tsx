@@ -60,17 +60,16 @@ export default async function PoemsLibrary({
             </p>
           </div>
           
-          {/* 搜索表单 (使用原生 Form 提交到 URL) */}
-          <form action="/poems" method="get" className="relative group w-full md:w-80">
-            {dynasty !== '全部' && <input type="hidden" name="dynasty" value={dynasty} />}
+          {/* 搜索表单 - 重定向到搜索页面 */}
+          <form action="/search" method="get" className="relative group w-full md:w-80">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[var(--text-secondary)]">
               <Search size={18} />
             </div>
-            <input 
-              type="text" 
+            <input
+              type="text"
               name="q"
               defaultValue={query}
-              placeholder="查找诗名 / 作者..." 
+              placeholder="查找诗名 / 作者 / 诗句..."
               className="w-full py-2.5 pl-10 pr-4 bg-surface border border-[var(--border)] rounded-full text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-serif"
             />
           </form>

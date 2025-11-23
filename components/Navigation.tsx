@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Search, User, BookOpen, Feather, UserPlus, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import MobileSearch from './MobileSearch';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const pathname = usePathname();
   const { user, signOut } = useAuth();
 
@@ -81,7 +83,7 @@ export default function Navigation() {
 
             {/* 3. 右侧功能区 (桌面) */}
             <div className="hidden md:flex items-center gap-4">
-              <Link href="/poems" className="p-2 text-[var(--text-secondary)] hover:text-primary hover:bg-primary/5 rounded-full transition-colors">
+              <Link href="/search" className="p-2 text-[var(--text-secondary)] hover:text-primary hover:bg-primary/5 rounded-full transition-colors">
                 <Search size={20} />
               </Link>
               <div className="h-4 w-[1px] bg-[var(--border)]"></div>
@@ -194,12 +196,18 @@ export default function Navigation() {
             )}
              
              <div className="flex justify-center gap-8 text-[var(--text-secondary)]">
-               <Link href="/poems" className="flex flex-col items-center gap-1 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
+               <button
+                 onClick={() => {
+                   setIsMobileMenuOpen(false);
+                   setIsMobileSearchOpen(true);
+                 }}
+                 className="flex flex-col items-center gap-1 text-xs"
+               >
                  <div className="p-3 bg-surface border border-[var(--border)] rounded-full">
                    <Search size={20} />
                  </div>
                  搜索
-               </Link>
+               </button>
                <Link href="/poems" className="flex flex-col items-center gap-1 text-xs" onClick={() => setIsMobileMenuOpen(false)}>
                  <div className="p-3 bg-surface border border-[var(--border)] rounded-full">
                    <BookOpen size={20} />
@@ -210,6 +218,12 @@ export default function Navigation() {
           </div>
         </div>
       </div>
+
+      {/* 移动端搜索组件 */}
+      <MobileSearch
+        isOpen={isMobileSearchOpen}
+        onClose={() => setIsMobileSearchOpen(false)}
+      />
     </>
   );
 }

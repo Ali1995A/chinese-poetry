@@ -25,6 +25,12 @@ export default function SearchBar({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query)}`);
+    }
+  };
+
   return (
     <form 
       onSubmit={handleSearch}
@@ -35,10 +41,11 @@ export default function SearchBar({
           <Search size={20} />
         </div>
         
-        <input 
-          type="text" 
+        <input
+          type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           autoFocus={autoFocus}
           className="w-full py-3 px-3 bg-transparent border-none outline-none font-serif text-primary placeholder:text-[var(--text-secondary)]/50"

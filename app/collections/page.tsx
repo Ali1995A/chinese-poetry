@@ -5,11 +5,11 @@ import Link from 'next/link';
 import {
   Crown, Mountain, Wind, User, BookOpen, Sparkles,
   Feather, Scroll, Moon, GraduationCap, BookMarked,
-  Trees, Swords, Flower, Zap, Sun
+  Trees, Swords, Flower, Zap, Sun, Map, Heart, Cloud
 } from 'lucide-react';
 import CalligraphyStroke from '@/components/CalligraphyStroke';
 
-// 精选主题配置 - 24个完整主题系列
+// 精选主题配置 - 基于标签数据优化的24个主题系列
 const collections = [
   // 🏛️ 朝代经典系列 (5个)
   {
@@ -125,56 +125,34 @@ const collections = [
     category: '诗人名家'
   },
   {
-    id: 'li-he',
-    title: '诗鬼·李贺',
-    subtitle: 'Li He',
-    description: '奇诡浪漫，想象瑰丽，中唐诗歌的独特风景',
-    icon: <Moon size={32} />,
-    href: '/poems?q=李贺',
-    color: 'from-violet-500/10 to-purple-500/10',
-    accentColor: 'text-violet-600',
+    id: 'bai-juyi',
+    title: '诗魔·白居易',
+    subtitle: 'Bai Juyi',
+    description: '通俗易懂，关注民生，新乐府运动的倡导者',
+    icon: <BookOpen size={32} />,
+    href: '/poems?q=白居易',
+    color: 'from-cyan-500/10 to-blue-500/10',
+    accentColor: 'text-cyan-600',
     category: '诗人名家'
   },
 
-  // 📚 蒙学启蒙系列 (4个)
+  // 📚 蒙学启蒙系列 (2个) - 基于蒙学经典
   {
     id: 'sanzijing',
     title: '三字经',
     subtitle: 'Three Character Classic',
     description: '人之初，性本善，中国传统蒙学第一书',
     icon: <BookOpen size={32} />,
-    href: '/poems?q=启蒙',
+    href: '/poems?q=三字经',
     color: 'from-sky-500/10 to-blue-500/10',
     accentColor: 'text-sky-600',
-    category: '蒙学启蒙'
-  },
-  {
-    id: 'qianziwen',
-    title: '千字文',
-    subtitle: 'Thousand Character Classic',
-    description: '天地玄黄，宇宙洪荒，古代识字启蒙经典',
-    icon: <Scroll size={32} />,
-    href: '/poems?q=天地',
-    color: 'from-cyan-500/10 to-teal-500/10',
-    accentColor: 'text-cyan-600',
-    category: '蒙学启蒙'
-  },
-  {
-    id: 'dizigui',
-    title: '弟子规',
-    subtitle: 'Standards for Students',
-    description: '弟子规，圣人训，传统行为规范教育经典',
-    icon: <GraduationCap size={32} />,
-    href: '/poems?q=弟子',
-    color: 'from-lime-500/10 to-green-500/10',
-    accentColor: 'text-lime-600',
     category: '蒙学启蒙'
   },
   {
     id: 'tangshi300',
     title: '唐诗三百首',
     subtitle: '300 Tang Poems',
-    description: '熟读唐诗三百首，不会作诗也会吟',
+    description: '熟读唐诗三百首，不会作诗也会吟，经典唐诗选集',
     icon: <BookMarked size={32} />,
     href: '/poems?dynasty=唐',
     color: 'from-rose-500/10 to-pink-500/10',
@@ -182,34 +160,58 @@ const collections = [
     category: '蒙学启蒙'
   },
 
-  // 🎨 风格流派系列 (4个)
+  // 🏞️ 山水风光系列 (4个) - 基于山水、西湖、长江等地点标签
   {
-    id: 'landscape',
-    title: '山水田园',
-    subtitle: 'Landscape Poetry',
-    description: '采菊东篱下，悠然见南山，自然山水之美',
+    id: 'west-lake',
+    title: '西湖诗韵',
+    subtitle: 'West Lake',
+    description: '欲把西湖比西子，淡妆浓抹总相宜，西湖美景的诗意表达',
     icon: <Trees size={32} />,
-    href: '/poems?q=山水',
+    href: '/poems?q=西湖',
     color: 'from-emerald-500/10 to-green-500/10',
     accentColor: 'text-emerald-600',
-    category: '风格流派'
+    category: '山水风光'
   },
   {
-    id: 'frontier',
-    title: '边塞豪情',
-    subtitle: 'Frontier Poetry',
-    description: '大漠孤烟直，长河落日圆，边塞军旅豪情',
-    icon: <Swords size={32} />,
-    href: '/poems?q=边塞',
-    color: 'from-amber-500/10 to-orange-500/10',
-    accentColor: 'text-amber-600',
-    category: '风格流派'
+    id: 'yangtze-river',
+    title: '长江情怀',
+    subtitle: 'Yangtze River',
+    description: '我住长江头，君住长江尾，长江流域的诗词情怀',
+    icon: <Map size={32} />,
+    href: '/poems?q=长江',
+    color: 'from-blue-500/10 to-cyan-500/10',
+    accentColor: 'text-blue-600',
+    category: '山水风光'
   },
   {
-    id: 'graceful',
+    id: 'landscape-poetry',
+    title: '山水田园',
+    subtitle: 'Landscape Poetry',
+    description: '采菊东篱下，悠然见南山，自然山水之美的诗意表达',
+    icon: <Mountain size={32} />,
+    href: '/poems?q=山水',
+    color: 'from-green-500/10 to-emerald-500/10',
+    accentColor: 'text-green-600',
+    category: '山水风光'
+  },
+  {
+    id: 'lake-poetry',
+    title: '湖泊诗情',
+    subtitle: 'Lake Poetry',
+    description: '洞庭湖、太湖等湖泊的诗词意境，水天一色的美景',
+    icon: <Cloud size={32} />,
+    href: '/poems?q=湖',
+    color: 'from-teal-500/10 to-cyan-500/10',
+    accentColor: 'text-teal-600',
+    category: '山水风光'
+  },
+
+  // 🎨 风格流派系列 (3个) - 基于婉约、豪放等风格标签
+  {
+    id: 'graceful-ci',
     title: '婉约词风',
     subtitle: 'Graceful Ci',
-    description: '杨柳岸，晓风残月，婉约词的细腻柔情',
+    description: '杨柳岸，晓风残月，婉约词的细腻柔情与含蓄之美',
     icon: <Flower size={32} />,
     href: '/poems?q=婉约',
     color: 'from-pink-500/10 to-rose-500/10',
@@ -217,75 +219,74 @@ const collections = [
     category: '风格流派'
   },
   {
-    id: 'heroic',
+    id: 'heroic-ci',
     title: '豪放词派',
     subtitle: 'Heroic Ci',
-    description: '大江东去，浪淘尽，豪放词的磅礴气势',
+    description: '大江东去，浪淘尽，豪放词的磅礴气势与壮阔胸怀',
     icon: <Zap size={32} />,
     href: '/poems?q=豪放',
     color: 'from-red-500/10 to-orange-500/10',
     accentColor: 'text-red-600',
     category: '风格流派'
   },
-
-  // 🌸 主题意境系列 (3个)
   {
-    id: 'seasons',
-    title: '四季诗情',
-    subtitle: 'Four Seasons',
-    description: '春华秋实，夏雨冬雪，四季变换的诗意',
-    icon: <Sun size={32} />,
-    href: '/poems?q=春',
-    color: 'from-cyan-500/10 to-blue-500/10',
-    accentColor: 'text-cyan-600',
-    category: '主题意境'
+    id: 'frontier-poetry',
+    title: '边塞豪情',
+    subtitle: 'Frontier Poetry',
+    description: '大漠孤烟直，长河落日圆，边塞军旅的豪情壮志',
+    icon: <Swords size={32} />,
+    href: '/poems?q=边塞',
+    color: 'from-amber-500/10 to-yellow-500/10',
+    accentColor: 'text-amber-600',
+    category: '风格流派'
+  },
+
+  // 💕 情感主题系列 (4个) - 基于相思、离别等情感标签
+  {
+    id: 'love-poetry',
+    title: '相思爱情',
+    subtitle: 'Love Poetry',
+    description: '此情可待成追忆，只是当时已惘然，爱情诗词的深情表达',
+    icon: <Heart size={32} />,
+    href: '/poems?q=相思',
+    color: 'from-pink-500/10 to-rose-500/10',
+    accentColor: 'text-pink-600',
+    category: '情感主题'
   },
   {
-    id: 'moon-love',
+    id: 'farewell-poetry',
+    title: '离别愁绪',
+    subtitle: 'Farewell Poetry',
+    description: '劝君更尽一杯酒，西出阳关无故人，离别诗词的深情厚谊',
+    icon: <Feather size={32} />,
+    href: '/poems?q=离别',
+    color: 'from-purple-500/10 to-violet-500/10',
+    accentColor: 'text-purple-600',
+    category: '情感主题'
+  },
+  {
+    id: 'moon-poetry',
     title: '月夜相思',
-    subtitle: 'Moon & Love',
-    description: '举头望明月，低头思故乡，月亮与相思主题',
+    subtitle: 'Moon Poetry',
+    description: '举头望明月，低头思故乡，月亮与相思的永恒主题',
     icon: <Moon size={32} />,
     href: '/poems?q=月',
-    color: 'from-indigo-500/10 to-purple-500/10',
+    color: 'from-indigo-500/10 to-blue-500/10',
     accentColor: 'text-indigo-600',
-    category: '主题意境'
+    category: '情感主题'
   },
   {
-    id: 'landscape-feeling',
-    title: '山水寄情',
-    subtitle: 'Landscape Feeling',
-    description: '行到水穷处，坐看云起时，山水寄情的意境',
-    icon: <Mountain size={32} />,
-    href: '/poems?q=山水',
-    color: 'from-teal-500/10 to-emerald-500/10',
-    accentColor: 'text-teal-600',
-    category: '主题意境'
+    id: 'seasons-poetry',
+    title: '四季诗情',
+    subtitle: 'Four Seasons',
+    description: '春华秋实，夏雨冬雪，四季变换的诗意表达',
+    icon: <Sun size={32} />,
+    href: '/poems?q=春',
+    color: 'from-amber-500/10 to-orange-500/10',
+    accentColor: 'text-amber-600',
+    category: '情感主题'
   },
 
-  // 📖 经典文集系列 (2个)
-  {
-    id: 'four-books',
-    title: '四书五经',
-    subtitle: 'Four Books & Five Classics',
-    description: '儒家经典，修身齐家治国平天下的智慧',
-    icon: <BookOpen size={32} />,
-    href: '/poems?q=经典',
-    color: 'from-stone-500/10 to-gray-500/10',
-    accentColor: 'text-stone-600',
-    category: '经典文集'
-  },
-  {
-    id: 'youmengying',
-    title: '幽梦影',
-    subtitle: 'Dream Shadows',
-    description: '明清小品文，闲情逸致，生活美学的典范',
-    icon: <Feather size={32} />,
-    href: '/poems?q=梦',
-    color: 'from-slate-500/10 to-gray-500/10',
-    accentColor: 'text-slate-600',
-    category: '经典文集'
-  }
 ];
 
 // 精选卡片组件
@@ -466,7 +467,7 @@ export default function CollectionsPage() {
       <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-[var(--border)]">
         <div className="text-center text-[var(--text-secondary)] font-sans text-sm">
           <p>点击主题卡片可浏览相关诗词作品</p>
-          <p className="mt-2 opacity-60">精心策划的24个主题，涵盖中国古典文学精华</p>
+          <p className="mt-2 opacity-60">基于标签数据优化的24个主题，涵盖中国古典文学精华</p>
         </div>
       </div>
     </main>
