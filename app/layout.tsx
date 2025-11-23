@@ -32,6 +32,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" className={`${notoSerif.variable} ${notoSans.variable}`}>
+      <head>
+        {/* Google Analytics 4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S4005KV8C5"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-S4005KV8C5');
+            `,
+          }}
+        />
+      </head>
       <body className="font-sans min-h-screen flex flex-col">
         <AuthProvider>
           {/* 1. 导航栏 */}
