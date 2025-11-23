@@ -78,19 +78,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* 右侧：每日一句 */}
+          {/* 右侧：项目信息 */}
           <div className="md:col-span-4">
              <div className="bg-[var(--background)] p-6 rounded-2xl border border-[var(--border)] relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-20 h-20 bg-accent/5 rounded-full blur-xl group-hover:bg-accent/10 transition-colors"></div>
-                <h4 className="font-serif font-bold text-primary mb-2">每日一言</h4>
-                {/* 这里的诗句保留宋体，更有味道 */}
-                <p className="font-serif text-[var(--text-secondary)] italic mb-4 leading-relaxed">
-                  "粗缯大布裹生涯，腹有诗书气自华。"
+                <h4 className="font-serif font-bold text-primary mb-2">关于项目</h4>
+                <p className="font-sans text-[var(--text-secondary)] mb-4 leading-relaxed">
+                  诗云是一个现代化的中文诗词数字文库，致力于让传统文化在现代设计中焕发新生。
                 </p>
                 <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] opacity-60 font-sans">
-                   <span>— 苏轼</span>
+                   <span>开源项目</span>
                    <span className="w-1 h-1 bg-[var(--text-secondary)] rounded-full"></span>
-                   <span>《和董传留别》</span>
+                   <span>持续更新</span>
                 </div>
              </div>
           </div>
