@@ -1,4 +1,8 @@
 import { supabase } from './supabase';
+import { searchLunyuPoems } from '@/lib/lunyu-service';
+import { searchChuciPoems } from '@/lib/chuci-service';
+import { searchShijing } from '@/lib/shijing-service';
+import { searchYuanqu } from '@/lib/yuanqu-service';
 
 export interface SearchResult {
   id: string;
@@ -61,7 +65,7 @@ export async function searchPoems(
  * 基础搜索实现（回退方案）
  */
 async function basicSearch(
-  query: string, 
+  query: string,
   options: SearchOptions = {}
 ): Promise<SearchResult[]> {
   const { limit = 50, offset = 0, dynasty } = options;
@@ -114,8 +118,139 @@ async function basicSearch(
     };
   });
 
-  // 按匹配分数排序
-  return scoredResults.sort((a, b) => b.match_score - a.match_score);
+  // 搜索论语数据
+  const lunyuResults = await searchLunyuPoems(query);
+  const lunyuScoredResults: SearchResult[] = lunyuResults.poems.map(poem => {
+    let match_type: SearchResult['match_type'] = 'title';
+    let match_score = 0;
+
+    // 计算匹配分数
+    if (poem.title.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'title';
+      match_score += 100;
+    }
+    if (poem.author.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'author';
+      match_score += 80;
+    }
+    if (poem.content.some(line => line.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'content';
+      match_score += 60;
+    }
+    if (poem.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'tag';
+      match_score += 40;
+    }
+
+    return {
+      ...poem,
+      match_type,
+      match_score
+    };
+  });
+
+  // 搜索楚辞数据
+  const chuciResults = await searchChuciPoems(query);
+  const chuciScoredResults: SearchResult[] = chuciResults.poems.map(poem => {
+    let match_type: SearchResult['match_type'] = 'title';
+    let match_score = 0;
+
+    // 计算匹配分数
+    if (poem.title.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'title';
+      match_score += 100;
+    }
+    if (poem.author.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'author';
+      match_score += 80;
+    }
+    if (poem.content.some(line => line.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'content';
+      match_score += 60;
+    }
+    if (poem.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'tag';
+      match_score += 40;
+    }
+
+    return {
+      ...poem,
+      match_type,
+      match_score
+    };
+  });
+
+  // 搜索诗经数据
+  const shijingResults = await searchShijing(query);
+  const shijingScoredResults: SearchResult[] = shijingResults.map(poem => {
+    let match_type: SearchResult['match_type'] = 'title';
+    let match_score = 0;
+
+    // 计算匹配分数
+    if (poem.title.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'title';
+      match_score += 100;
+    }
+    if (poem.author.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'author';
+      match_score += 80;
+    }
+    if (poem.content.some(line => line.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'content';
+      match_score += 60;
+    }
+    if (poem.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'tag';
+      match_score += 40;
+    }
+
+    return {
+      ...poem,
+      match_type,
+      match_score
+    };
+  });
+
+  // 搜索元曲数据
+  const yuanquResults = await searchYuanqu(query);
+  const yuanquScoredResults: SearchResult[] = yuanquResults.map(poem => {
+    let match_type: SearchResult['match_type'] = 'title';
+    let match_score = 0;
+
+    // 计算匹配分数
+    if (poem.title.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'title';
+      match_score += 100;
+    }
+    if (poem.author.toLowerCase().includes(query.toLowerCase())) {
+      match_type = 'author';
+      match_score += 80;
+    }
+    if (poem.content.some(line => line.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'content';
+      match_score += 60;
+    }
+    if (poem.tags?.some(tag => tag.toLowerCase().includes(query.toLowerCase()))) {
+      match_type = 'tag';
+      match_score += 40;
+    }
+
+    return {
+      ...poem,
+      match_type,
+      match_score
+    };
+  });
+
+  // 合并结果并按匹配分数排序
+  const allResults = [
+    ...scoredResults,
+    ...lunyuScoredResults,
+    ...chuciScoredResults,
+    ...shijingScoredResults,
+    ...yuanquScoredResults
+  ];
+  return allResults.sort((a, b) => b.match_score - a.match_score).slice(0, limit);
 }
 
 /**
