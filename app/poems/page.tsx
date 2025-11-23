@@ -1,7 +1,40 @@
 import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { Search, Filter, ChevronRight, ChevronLeft } from 'lucide-react';
 import { supabase } from '@/utils/supabase';
+
+export async function generateMetadata({ searchParams }: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}): Promise<Metadata> {
+  const dynasty = typeof searchParams.dynasty === 'string' ? searchParams.dynasty : '全部';
+  const query = typeof searchParams.q === 'string' ? searchParams.q : '';
+  
+  let title = '诗词文库 - 诗云 Poetry Cloud';
+  let description = '浏览完整的诗词文库，包含唐诗、宋词、元曲等历代经典作品。支持按朝代筛选和关键词搜索。';
+  
+  if (dynasty !== '全部') {
+    title = `${dynasty}代诗词 - 诗云 Poetry Cloud`;
+    description = `浏览${dynasty}代经典诗词作品，感受${dynasty}代文学的独特魅力。`;
+  }
+  
+  if (query) {
+    title = `搜索"${query}" - 诗词文库 - 诗云 Poetry Cloud`;
+    description = `搜索关键词"${query}"相关的诗词作品，找到您感兴趣的古典诗词。`;
+  }
+
+  return {
+    title,
+    description,
+    keywords: `诗词文库,${dynasty}代诗词,${query},古典文学,诗词搜索`,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      locale: 'zh_CN',
+    },
+  };
+}
 
 // 定义每页显示多少条
 const ITEMS_PER_PAGE = 24;

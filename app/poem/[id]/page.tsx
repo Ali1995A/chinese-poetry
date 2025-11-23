@@ -1,10 +1,46 @@
 import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
 import PoemReader from '@/components/PoemReader';
 import FavoriteButton from '@/components/FavoriteButton';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
+
+// 生成动态元数据
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const { data: poem } = await supabase
+    .from('poems')
+    .select('title, author, dynasty, content, tags')
+    .eq('id', params.id)
+    .single();
+
+  if (!poem) {
+    return {
+      title: '诗词详情 - 诗云 Poetry Cloud',
+      description: '浏览诗词作品详情',
+    };
+  }
+
+  const contentPreview = Array.isArray(poem.content)
+    ? poem.content.join('，').slice(0, 100) + '...'
+    : poem.content?.slice(0, 100) + '...';
+
+  const title = `${poem.title} - ${poem.author} (${poem.dynasty}) - 诗云 Poetry Cloud`;
+  const description = `${poem.title}，${poem.author} (${poem.dynasty})。${contentPreview}`;
+
+  return {
+    title,
+    description,
+    keywords: `${poem.title},${poem.author},${poem.dynasty},诗词欣赏,古典文学${poem.tags ? ',' + poem.tags.join(',') : ''}`,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      locale: 'zh_CN',
+    },
+  };
+}
 
 // 这是一个服务端组件
 export default async function PoemPage({ params }: { params: { id: string } }) {

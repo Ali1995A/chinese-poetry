@@ -34,7 +34,7 @@ export default function Footer() {
                   诗云
                 </span>
               </Link>
-              {/* 项目介绍 */}
+              {/* 项目介绍 - 页脚字体用细黑 */}
               <p className="text-[var(--text-secondary)] font-sans font-light leading-relaxed">
                 现代化的中文诗词数字文库，致力于让传统文化在现代设计中焕发新生，为每一位诗词爱好者提供静心阅读的栖息地。
               </p>
@@ -63,6 +63,7 @@ export default function Footer() {
                   <span className="w-1 h-4 bg-accent rounded-full"></span>
                   探索
                 </h4>
+                {/* 页脚字体用细黑 */}
                 <ul className="space-y-3 font-sans text-[var(--text-secondary)]">
                   <li><Link href="/poems" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">诗词文库</Link></li>
                   <li><Link href="/authors" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">历代诗人</Link></li>
@@ -77,6 +78,7 @@ export default function Footer() {
                   <span className="w-1 h-4 bg-accent rounded-full"></span>
                   关于
                 </h4>
+                {/* 页脚字体用细黑 */}
                 <ul className="space-y-3 font-sans text-[var(--text-secondary)]">
                   <li><Link href="/about" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">关于我们</Link></li>
                   <li><Link href="/log" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">更新日志</Link></li>
@@ -90,6 +92,7 @@ export default function Footer() {
                   <span className="w-1 h-4 bg-accent rounded-full"></span>
                   支持
                 </h4>
+                {/* 页脚字体用细黑 */}
                 <ul className="space-y-3 font-sans text-[var(--text-secondary)]">
                   <li><Link href="/api" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">开放 API</Link></li>
                   <li><Link href="/help" className="hover:text-primary hover:underline decoration-accent underline-offset-4 transition-all">帮助中心</Link></li>
@@ -100,22 +103,23 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 底部版权栏 + ICC 落款 */}
+        {/* 底部版权栏 + ICC 落款 - 页脚字体用细黑 */}
         <div className="pt-8 border-t border-[var(--border)] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm font-sans text-[var(--text-secondary)]">
             © {new Date().getFullYear()} 诗云 (Poetry Cloud). All rights reserved.
           </p>
           
           <div className="flex items-center gap-6">
-             {/* ✅ 这里加入了 ICC 落款 */}
-             <div className="flex items-center gap-1 text-xs md:text-sm font-sans text-[var(--text-secondary)] opacity-80 hover:opacity-100 transition-opacity cursor-default" title="I Love CC">
-                <span className="font-bold tracking-widest text-primary">ICC</span>
-                <span>·</span>
-                <span>Made with</span>
-                <Heart size={12} className="text-accent fill-accent animate-pulse" />
-                <span>for</span>
-                <span className="font-medium text-primary">CC</span>
-             </div>
+            {/* ✅ 这里加入了 ICC 落款 */}
+            {/* 重要：ICC落款必须使用细黑字体 (font-sans + font-light) - 页脚字体用细黑 */}
+            <div className="flex items-center gap-1 text-xs md:text-sm font-sans font-light text-[var(--text-secondary)] opacity-80 hover:opacity-100 transition-opacity cursor-default" title="I Love CC">
+               <span className="font-bold tracking-widest text-primary">ICC</span>
+               <span>·</span>
+               <span>Made with</span>
+               <Heart size={12} className="text-accent fill-accent animate-pulse" />
+               <span>for</span>
+               <span className="font-medium text-primary">CC</span>
+            </div>
              
              {/* 返回顶部按钮 */}
              <button 

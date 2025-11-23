@@ -1,10 +1,23 @@
 import React from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { Sparkles, ArrowRight, Mountain, Wind, Feather, Scroll, Quote } from 'lucide-react';
 import SearchBar from '@/components/SearchBar';
 import PoemCard from '@/components/PoemCard';
 import CalligraphyStroke from '@/components/CalligraphyStroke';
 import { supabase } from '@/utils/supabase';
+
+export const metadata: Metadata = {
+  title: '诗云 Poetry Cloud - 寻觅中国诗词之美',
+  description: '在数字世界重拾水墨丹青的感动，探索唐诗、宋词、元曲等中国古典诗词的无限魅力。每日推荐经典诗词，提供智能搜索和个性化收藏功能。',
+  keywords: '诗词,唐诗,宋词,元曲,古典文学,中国诗词,诗歌欣赏,诗词搜索,李白,杜甫,苏轼',
+  openGraph: {
+    title: '诗云 Poetry Cloud - 寻觅中国诗词之美',
+    description: '在数字世界重拾水墨丹青的感动，探索中国古典诗词的无限魅力',
+    type: 'website',
+    locale: 'zh_CN',
+  },
+};
 
 // 分类导航数据
 const categories = [

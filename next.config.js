@@ -31,16 +31,6 @@ const nextConfig = {
       },
     ];
   },
-  // 重定向规则
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/poems',
-        permanent: false,
-      },
-    ];
-  },
   // 头部配置
   async headers() {
     return [
