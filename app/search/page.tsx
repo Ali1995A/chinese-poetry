@@ -8,33 +8,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import SearchFilters from '@/components/SearchFilters';
 import Link from 'next/link';
 
-// 服务端组件用于生成元数据
-export async function generateMetadata({ searchParams }: {
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
-  const query = typeof searchParams.q === 'string' ? searchParams.q : '';
-  
-  const title = query
-    ? `搜索"${query}" - 诗词搜索 - 诗云 Poetry Cloud`
-    : '诗词搜索 - 诗云 Poetry Cloud';
-  
-  const description = query
-    ? `搜索关键词"${query}"相关的诗词作品，支持按标题、作者、内容、标签进行智能搜索。`
-    : '智能诗词搜索平台，支持按标题、作者、内容、标签搜索唐诗、宋词、元曲等古典诗词作品。';
-
-  return {
-    title,
-    description,
-    keywords: query ? `诗词搜索,${query},智能搜索,古典文学` : '诗词搜索,智能搜索,唐诗搜索,宋词搜索,元曲搜索',
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      locale: 'zh_CN',
-    },
-  };
-}
-
 interface SearchResult {
   id: string;
   title: string;

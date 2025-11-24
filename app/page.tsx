@@ -40,6 +40,58 @@ function getDailySeed(): number {
   return Math.abs(hash);
 }
 
+// 静态示例诗词数据（当数据库不可用时使用）
+const staticFeaturedPoems = [
+  {
+    id: 1,
+    title: '静夜思',
+    author: '李白',
+    dynasty: '唐',
+    content: ['床前明月光', '疑是地上霜', '举头望明月', '低头思故乡'],
+    tags: ['思乡', '明月', '夜晚']
+  },
+  {
+    id: 2,
+    title: '春晓',
+    author: '孟浩然',
+    dynasty: '唐',
+    content: ['春眠不觉晓', '处处闻啼鸟', '夜来风雨声', '花落知多少'],
+    tags: ['春天', '自然', '生活']
+  },
+  {
+    id: 3,
+    title: '相思',
+    author: '王维',
+    dynasty: '唐',
+    content: ['红豆生南国', '春来发几枝', '愿君多采撷', '此物最相思'],
+    tags: ['相思', '爱情', '红豆']
+  },
+  {
+    id: 4,
+    title: '登鹳雀楼',
+    author: '王之涣',
+    dynasty: '唐',
+    content: ['白日依山尽', '黄河入海流', '欲穷千里目', '更上一层楼'],
+    tags: ['登高', '壮丽', '哲理']
+  },
+  {
+    id: 5,
+    title: '江雪',
+    author: '柳宗元',
+    dynasty: '唐',
+    content: ['千山鸟飞绝', '万径人踪灭', '孤舟蓑笠翁', '独钓寒江雪'],
+    tags: ['冬天', '孤独', '自然']
+  },
+  {
+    id: 6,
+    title: '望庐山瀑布',
+    author: '李白',
+    dynasty: '唐',
+    content: ['日照香炉生紫烟', '遥看瀑布挂前川', '飞流直下三千尺', '疑是银河落九天'],
+    tags: ['山水', '壮丽', '自然']
+  }
+];
+
 // 服务端组件
 export default async function Home() {
   
@@ -47,46 +99,59 @@ export default async function Home() {
   // 基于日期的稳定随机推荐算法
   const dailySeed = getDailySeed();
   
-  // 获取所有诗歌ID
-  const { data: allPoems, error: countError } = await supabase
-    .from('poems')
-    .select('id')
-    .order('id');
-
-  if (countError) {
-    console.error('Error fetching poem IDs:', countError);
-  }
-
-  // 使用基于日期的随机算法选择6首不同的诗
   let featuredPoems = null;
   let error = null;
-  
-  if (allPoems && allPoems.length > 0) {
-    const getRandomIndices = () => {
-      const indices = new Set<number>();
-      while (indices.size < Math.min(6, allPoems.length)) {
-        const randomValue = Math.sin(dailySeed + indices.size * 100) * 10000;
-        const index = Math.floor(Math.abs(randomValue) % allPoems.length);
-        indices.add(index);
-      }
-      return Array.from(indices);
-    };
+  let useStaticData = false;
 
-    const randomIndices = getRandomIndices();
-    const selectedIds = randomIndices.map(index => allPoems[index].id);
-    
-    // 获取选中的诗歌详情
-    const { data: poemsData, error: poemsError } = await supabase
+  try {
+    // 获取所有诗歌ID
+    const { data: allPoems, error: countError } = await supabase
       .from('poems')
-      .select('*')
-      .in('id', selectedIds);
+      .select('id')
+      .order('id');
 
-    featuredPoems = poemsData;
-    error = poemsError;
-  }
+    if (countError) {
+      console.error('Error fetching poem IDs:', countError);
+      throw countError;
+    }
 
-  if (error) {
-    console.error('Error fetching home poems:', error);
+    // 使用基于日期的随机算法选择6首不同的诗
+    if (allPoems && allPoems.length > 0) {
+      const getRandomIndices = () => {
+        const indices = new Set<number>();
+        while (indices.size < Math.min(6, allPoems.length)) {
+          const randomValue = Math.sin(dailySeed + indices.size * 100) * 10000;
+          const index = Math.floor(Math.abs(randomValue) % allPoems.length);
+          indices.add(index);
+        }
+        return Array.from(indices);
+      };
+
+      const randomIndices = getRandomIndices();
+      const selectedIds = randomIndices.map(index => allPoems[index].id);
+      
+      // 获取选中的诗歌详情
+      const { data: poemsData, error: poemsError } = await supabase
+        .from('poems')
+        .select('*')
+        .in('id', selectedIds);
+
+      if (poemsError) {
+        console.error('Error fetching home poems:', poemsError);
+        throw poemsError;
+      }
+
+      featuredPoems = poemsData;
+    } else {
+      // 如果数据库中没有数据，使用静态数据
+      useStaticData = true;
+      featuredPoems = staticFeaturedPoems;
+    }
+  } catch (err) {
+    console.error('Database connection error:', err);
+    // 数据库连接失败时使用静态数据
+    useStaticData = true;
+    featuredPoems = staticFeaturedPoems;
   }
   // =======================================================
 
@@ -245,7 +310,7 @@ export default async function Home() {
           </div>
         ) : (
           <div className="text-center py-10 text-[var(--text-secondary)] font-sans">
-            {error ? '加载推荐失败，请刷新重试' : '暂无推荐诗词，请先运行导入脚本'}
+            {useStaticData ? '使用示例诗词展示' : '暂无推荐诗词，请先运行导入脚本'}
           </div>
         )}
       </section>
