@@ -39,3 +39,18 @@ yarn-error.log*
 .pyenv/
 __pycache__/
 .pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Test files
+log.log
+temp.html
+test_poetry.py
+requirements.txt
